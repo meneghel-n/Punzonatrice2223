@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.40" ClassName="CNestedPlcProjDef">
+	<Project GUID="{787981CB-BA9B-4AC7-9CED-6910CA5FC6E7}" Name="Punzonatrice_2223" PrjFilePath="..\..\Punzonatrice_2223\Punzonatrice_2223.plcproj" TmcFilePath="..\..\Punzonatrice_2223\Punzonatrice_2223.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Punzonatrice_2223\Punzonatrice_2223.tmc" TmcHash="{33ECE615-70FB-5006-B1D3-0B8F8DD45289}">
+			<Name>Punzonatrice_2223 Instance</Name>
+			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+			<Vars VarGrpType="1">
+				<Name>PlcTask Inputs</Name>
+				<Var>
+					<Name>GVL_IO.PSTART</Name>
+					<Comment><![CDATA[ pulsante start - I5]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_IO.PSTOP</Name>
+					<Comment><![CDATA[ pulsante stop (NC) - I6]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_IO.PACK</Name>
+					<Comment><![CDATA[ pulsante ripristino - I7]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_IO.PEMERG</Name>
+					<Comment><![CDATA[ pulsante emergenza (NC) - I8]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_IO.I1</Name>
+					<Comment><![CDATA[ Sensore ingresso nastro (NC) - I1]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_IO.I2</Name>
+					<Comment><![CDATA[ Sensore pezzo in posizione (NC) - I2]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_IO.I3</Name>
+					<Comment><![CDATA[ Sensore mandrino in alto - I3]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_IO.I4</Name>
+					<Comment><![CDATA[ Sensore mandrino in basso - I4]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+			</Vars>
+			<Vars VarGrpType="2" AreaNo="1">
+				<Name>PlcTask Outputs</Name>
+				<Var>
+					<Name>GVL_IO.Q1</Name>
+					<Comment><![CDATA[ Motore avanzamento nastro, caricamento pezzo - Q1]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_IO.Q2</Name>
+					<Comment><![CDATA[ Motore ritorno nastro, scarico pezzo - Q2]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_IO.Q3</Name>
+					<Comment><![CDATA[ Motore salita mandrino - Q3]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_IO.Q4</Name>
+					<Comment><![CDATA[ Motore discesa mandrino - Q4]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_IO.LSTART</Name>
+					<Comment><![CDATA[ Indicatore start - Q5]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_IO.LSTOP</Name>
+					<Comment><![CDATA[ Indicatore stop - Q6]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_IO.LACK</Name>
+					<Comment><![CDATA[ Indicatore ack - Q7]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+			</Vars>
+			<Contexts>
+				<Context>
+					<Id NeedCalleeCall="true">0</Id>
+					<Name>PlcTask</Name>
+					<ManualConfig>
+						<OTCID>#x02010030</OTCID>
+					</ManualConfig>
+					<Priority>20</Priority>
+					<CycleTime>10000000</CycleTime>
+				</Context>
+			</Contexts>
+			<TaskPouOids>
+				<TaskPouOid Prio="20" OTCID="#x08502001"/>
+			</TaskPouOids>
+		</Instance>
+	</Project>
+</TcSmItem>

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{22d883b0-7051-436f-9aca-7d9023edb974}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	punzonatrice	:	FB_MSF();
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//eseguo l'istanza della punzonatrice
+punzonatrice(
+	start:= GVL_IO.PSTART, 
+	stop:= GVL_IO.PSTOP, 
+	ack:= GVL_IO.PACK, 
+	emerg:= GVL_IO.PEMERG, 
+	i1:= GVL_IO.I1, 
+	i2:= GVL_IO.I2, 
+	i3:= GVL_IO.I3, 
+	i4:= GVL_IO.I4, 
+	q1=> GVL_IO.Q1, 
+	q2=> GVL_IO.Q2, 
+	q3=> GVL_IO.Q3, 
+	q4=> GVL_IO.Q4, 
+	lstart=> GVL_IO.LSTART, 
+	lstop=> GVL_IO.LSTOP, 
+	lack=> GVL_IO.LACK);]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="22" Count="0" />
+      <LineId Id="7" Count="14" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

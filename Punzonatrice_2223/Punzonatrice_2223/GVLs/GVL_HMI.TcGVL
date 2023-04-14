@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="GVL_HMI" Id="{ba74d478-68e8-4493-bba2-4e1a175e24c5}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+// GVL_HMI
+VAR_GLOBAL
+	// ingressi da HMI
+	hmi_start: BOOL;
+	hmi_stop: BOOL := TRUE;
+	hmi_ack: BOOL;
+	
+	// uscite verso HMI
+	hmi_lstart: BOOL;
+	hmi_lstop: BOOL;
+	hmi_lack: BOOL;
+	msg_stato:	STRING(21) :='';
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

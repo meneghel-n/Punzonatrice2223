@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_MSF" Id="{8958899a-8fff-4e45-a6bb-190687dc6c0a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MSF
+VAR_INPUT
+	start	:	BOOL;
+	stop	:	BOOL;
+	ack		:	BOOL;
+	emerg	:	BOOL;
+	i1		:	BOOL;
+	i2		:	BOOL;
+	i3		:	BOOL;
+	i4		:	BOOL;
+END_VAR
+VAR_OUTPUT
+	q1		:	BOOL;
+	q2		:	BOOL;
+	q3		:	BOOL;
+	q4		:	BOOL;
+	lstart	:	BOOL;
+	lstop	:	BOOL;
+	lack	:	BOOL;
+END_VAR
+VAR
+	// enumeratore privato degli stati, la variabile stato parte da S0
+	stato : (S0, S1, S2, S3, S4, S5, S6, S7, S8, SE, SA) := S0;
+	//timer T34 attesa dopo caricamento
+	T34		:	TON();
+	T82		:	TON();
+	
+	//bit di abilitazione
+	enable	:	BOOL;
+	
+	//bit delle transizioni
+	tr_01	:	BOOL;
+	tr_02	:	BOOL;
+	tr_12	:	BOOL;
+	tr_23	:	BOOL;
+	tr_34	:	BOOL;
+	tr_45	:	BOOL;
+	tr_56	:	BOOL;
+	tr_67	:	BOOL;
+	tr_78	:	BOOL;
+	tr_80	:	BOOL;
+	tr_82	:	BOOL;
+	tr_EA	:	BOOL;
+	tr_A0	:	BOOL;
+	
+	//memoria dello stop nominale
+	mArresto	:	BOOL := FALSE;
+	
+	//memoria di un pezzo in lavorazione sul nastro
+	mPezzoCarico	:	BOOL := FALSE;
+	
+	// lampeggio
+	osc : FB_oscillatore();
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// 1. aggiornamento condizioni di abilitazione
+enable := stop AND emerg;
+
+// 2. aggiornamento timers, contatori, triggers sui fronti
+T34(IN := (stato = S3 AND enable), PT := T#2S );
+T82(IN := (stato = S8 AND enable), PT := T#3S );
+osc(enable := (stato=SA) OR (stato = SE), t_high := T#500MS, t_low := T#500MS);
+
+// 3. valutazione della condizione di arresto nominale
+IF NOT stop AND emerg THEN
+	IF (stato = S1 OR stato = S2) THEN
+		stato := S0;
+	ELSIF (stato = S3 OR stato = S4 OR stato = S5 OR stato = S6 OR stato = S7 OR stato = S8) THEN
+		mArresto := TRUE;
+	END_IF
+END_IF
+
+// 4. valutazione della condizione di arresto di emergenza
+IF NOT emerg THEN
+	stato := SE;
+END_IF
+
+// 5. aggiornamento delle condizioni di transizione di stato
+tr_01 := enable AND NOT(i3) AND start;
+tr_02 := enable AND i3 AND start;
+tr_12 := enable AND i3;
+tr_23 := enable AND i1;
+tr_34 := enable AND T34.Q AND NOT (i1);
+tr_45 := enable AND NOT (i2);
+tr_56 := enable AND i4;
+tr_67 := enable AND i3;
+tr_78 := enable AND NOT (I1);
+tr_82 := enable AND T82.Q AND NOT mArresto AND i1;
+tr_80 := enable AND mArresto;
+
+//comando uscite
+lstart := (stato <> S0);
+lstop := (stato = S0) OR ((stato = SE) AND osc.Q);
+lack := (stato = SE) OR ((stato = SA) AND osc.Q);
+q1 := (stato = S4);
+q2 := (stato = S7) OR ((stato = SA) AND mPezzoCarico);
+q3 := (stato = S1) OR (stato = S6) OR ((stato = SA) AND NOT (i3));
+q4 := (stato = S5);
+	]]></ST>
+    </Implementation>
+    <LineIds Name="FB_MSF">
+      <LineId Id="55" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="58" Count="3" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="65" Count="3" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="85" Count="1" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="70" Count="3" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="74" Count="7" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="92" Count="2" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="97" Count="1" />
+      <LineId Id="102" Count="3" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="106" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

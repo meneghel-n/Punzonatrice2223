@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="GVL_IO" Id="{e2e0e51b-91c9-4958-a420-1db35e4274ed}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+// GVL_IO
+VAR_GLOBAL
+	// pulsante start - I5
+	PSTART	AT %I*:BOOL;
+	// pulsante stop (NC) - I6
+	PSTOP	AT %I*:BOOL;
+	// pulsante ripristino - I7
+	PACK	AT %I*:BOOL;
+	// pulsante emergenza (NC) - I8
+	PEMERG	AT %I*:BOOL;
+	// Sensore ingresso nastro (NC) - I1
+	I1		AT %I*:BOOL;
+	// Sensore pezzo in posizione (NC) - I2
+	I2		AT %I*:BOOL;
+	// Sensore mandrino in alto - I3
+	I3		AT %I*:BOOL;
+	// Sensore mandrino in basso - I4
+	I4		AT %I*:BOOL;
+	// Motore avanzamento nastro, caricamento pezzo - Q1
+	Q1		AT %Q*:BOOL;
+	// Motore ritorno nastro, scarico pezzo - Q2
+	Q2		AT %Q*:BOOL;
+	// Motore salita mandrino - Q3
+	Q3		AT %Q*:BOOL;
+	// Motore discesa mandrino - Q4
+	Q4		AT %Q*:BOOL;
+	// Indicatore start - Q5
+	LSTART	AT %Q*:BOOL;
+	// Indicatore stop - Q6
+	LSTOP	AT %Q*:BOOL;
+	// Indicatore ack - Q7
+	LACK	AT %Q*:BOOL;	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
